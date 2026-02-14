@@ -1,0 +1,34 @@
+generated: 2026-02-13
+project: BoazPlan
+project_key: NOKEY
+tracking_system: file-system
+story_location: "_bmad-output/implementation-artifacts"
+
+development_status:
+  epic-1: in-progress
+  1-1-member-registration: ready-for-dev
+  1-2-church-creation-verification: backlog
+  1-3-role-assignment: backlog
+  epic-1-retrospective: optional
+
+  epic-2: in-progress
+  2-1-minimal-request-creation: ready-for-dev
+  2-2-anonymous-prayer-posts: backlog
+  2-3-request-status-history: backlog
+  epic-2-retrospective: optional
+
+  epic-3: backlog
+  3-1-manual-assignment-ui: backlog
+  3-2-volunteer-accept-decline: backlog
+  3-3-suggested-volunteers: backlog
+  epic-3-retrospective: optional
+
+  epic-4: backlog
+  4-1-push-inapp-notifications: backlog
+  4-2-announcement-digest: backlog
+  epic-4-retrospective: optional
+
+  epic-7: backlog
+  7-1-draft-autosave: backlog
+  7-2-retry-on-reconnect-submit: backlog
+  epic-7-retrospective: optional
