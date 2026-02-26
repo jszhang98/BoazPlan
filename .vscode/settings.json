@@ -1,7 +1,9 @@
 {
-  "chat.agent.enabled": true,
-  "chat.agent.maxRequests": 15,
 
+  "chat.agent.maxRequests": 100,
+
+  "chat.agent.enabled": true,
+  
   "chat.mcp.discovery.enabled": {
     "claude-desktop": true,
     "windsurf": true,

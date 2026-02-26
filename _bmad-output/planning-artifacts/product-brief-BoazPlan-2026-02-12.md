@@ -49,13 +49,12 @@ A secure, church-governed app where members can post needs (material help, rides
 - Church-controlled governance and privacy settings (visibility, approval workflows).  
 - Built-in volunteer matching and simple task status tracking.  
 - Low-friction mobile UX designed for quick posting and responses.  
-- Practical metrics and admin views for pastors (response rate, average response time, MAU).
+- Practical metrics and admin views for pastors (response rate, MAU).
 
 ### Success Metrics
 
 - Monthly Active Users (MAU) within participating churches  
 - Request response rate (percentage of requests accepted and resolved)  
-- Average response time from request to volunteer assignment  
 - Pastor/leader satisfaction and continued adoption
 
 ---
@@ -81,16 +80,6 @@ A secure, church-governed app where members can post needs (material help, rides
   - **Baseline:** TBD
   - **Target:** ≥70%
   - **Action / Alert:** If < target, run volunteer engagement campaign + review notifications
-
-- **Metric name:** Average Response Time
-  - **Definition:** Median hours between request creation and volunteer assignment
-  - **Formula:** median(assignment_time - request_time)
-  - **Data source:** `requests` and `assignments` timestamps
-  - **Frequency:** Weekly
-  - **Owner:** Ops/Product
-  - **Baseline:** TBD
-  - **Target:** < 24 hours
-  - **Action / Alert:** If trending up, investigate bottlenecks (notifications, visibility)
 
 - **Metric name:** Request Resolution Rate
   - **Definition:** % of requests marked complete within 14 days
@@ -220,7 +209,6 @@ A secure, church-governed app where members can post needs (material help, rides
 
 - Core flow validated: a request can be posted, approved, assigned, and resolved
 - Request Response Rate ≥ 70% within 72 hours
-- Average Response Time < 24 hours
 - Pastor/Leader Satisfaction ≥ 4.0 (survey)
 - Pilot MAU ≥ 100 within 3 months
 

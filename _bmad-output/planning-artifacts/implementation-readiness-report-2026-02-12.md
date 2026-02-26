@@ -74,7 +74,7 @@ stepsCompleted: [1,2,3,4]
 - FR17: [User] can report a post or user for policy violations.
 - FR18: [Moderator/Pastor] can flag, hide, or remove content and capture a moderation reason.
 - FR19: [Admin] can access audit logs of moderation and approval actions.
-- FR20: [Pastor/Admin] can view dashboard metrics (MAU, request response rate, avg response time).
+- FR20: [Pastor/Admin] can view dashboard metrics (MAU, request response rate).
 - FR21: [Admin] can export reports listing requests, assignments, and resolution statuses.
 - FR22: [Pastor/Admin] can configure simple governance settings (approval thresholds, visibility policies).
 - FR23: [Member] can save a draft request locally and continue editing while offline.

@@ -66,7 +66,6 @@ Rationale: The brief emphasizes mobile-first and PWA behavior, there are no regu
 ### Measurable Outcomes
 - Median request submit time ≤ 2 minutes and 90% requests ≤ 2 minutes
 - Request Response Rate ≥ 70% within 72 hours
-- Average response time < 24 hours
 - Pastor/Leader satisfaction ≥ 4.0 (survey)
 
 ---
@@ -108,6 +107,24 @@ Rationale: The brief emphasizes mobile-first and PWA behavior, there are no regu
 - **Resolution:** Safety restored; incident logged for audit and review.
 - **Support needs:** moderation tools, incident workflow, policy templates, reporting
 
+### 6) Visitor Discovery and Registration Journey
+- **Opening:** A visitor discovers BoazPlan through organic search, social media, or a referral link and lands on the mobile-optimized homepage, feeling curious but unsure about joining a new community platform.
+- **Rising Action:** They scroll through the hero section with a clear tagline ("Connect Your Church Community for Prayer and Help"), explore brief feature highlights (privacy-first requests, volunteer matching), and encounter two prominent CTAs ("Join as Member" or "Register a Church"); analytics track homepage load and CTA hover/click interactions; they select a path (e.g., "Join as Member" for personal use or "Register a Church" for organizational setup), initiating the flow with a recorded start event.
+- **Climax:** For member registration, they enter basic details (name, email, church association if known), verify via OTP, and complete profile setup in under 5 minutes; for church registration, they provide church details (name, location, governance), submit for verification (automated or manual), and await activation; both paths include progress indicators, mobile-friendly forms, and real-time validation; signup success is tracked upon completion, with a target ≥70% conversion rate.
+- **Resolution:** Successful onboarding leads to their first use—members can post a request or view the feed, while church admins invite members and configure settings; they receive a welcome notification and see immediate value in the platform's simplicity and privacy.
+- **Emotional arc:** curious → engaged → hopeful → empowered
+- **Recovery requirements:** Handle failed OTP verification with resend options and email fallback; manage connectivity issues with local draft saving and auto-retry on reconnect; address abandoned flows with reminder emails after 24 hours; support edge cases like duplicate emails (merge or notify) or invalid church details (manual review queue); ensure mobile-first responsiveness for all steps.
+- **Metrics tracking:** Homepage CTA CTR (target ≥5% pilot), signup conversion rate (target ≥5% pilot), median time-to-signup (target ≤5 min), signup success rate (target ≥70%).
+
+### 6) Visitor Discovery and Registration Journey
+- **Opening:** A visitor discovers BoazPlan through organic search, social media, or a referral link and lands on the mobile-optimized homepage, feeling curious but unsure about joining a new community platform.
+- **Rising Action:** They scroll through the hero section with a clear tagline ("Connect Your Church Community for Prayer and Help"), explore brief feature highlights (privacy-first requests, volunteer matching), and encounter two prominent CTAs ("Join as Member" or "Register a Church"); analytics track homepage load and CTA hover/click interactions; they select a path (e.g., "Join as Member" for personal use or "Register a Church" for organizational setup), initiating the flow with a recorded start event.
+- **Climax:** For member registration, they enter basic details (name, email, church association if known), verify via OTP, and complete profile setup in under 5 minutes; for church registration, they provide church details (name, location, governance), submit for verification (automated or manual), and await activation; both paths include progress indicators, mobile-friendly forms, and real-time validation; signup success is tracked upon completion, with a target ≥70% conversion rate.
+- **Resolution:** Successful onboarding leads to their first use—members can post a request or view the feed, while church admins invite members and configure settings; they receive a welcome notification and see immediate value in the platform's simplicity and privacy.
+- **Emotional arc:** curious → engaged → hopeful → empowered
+- **Recovery requirements:** Handle failed OTP verification with resend options and email fallback; manage connectivity issues with local draft saving and auto-retry on reconnect; address abandoned flows with reminder emails after 24 hours; support edge cases like duplicate emails (merge or notify) or invalid church details (manual review queue); ensure mobile-first responsiveness for all steps.
+- **Metrics tracking:** Homepage CTA CTR (target ≥5% pilot), signup conversion rate (target ≥5% pilot), median time-to-signup (target ≤5 min), signup success rate (target ≥70%).
+
 ---
 
 ## Journey Requirements Summary (high level)
@@ -119,6 +136,7 @@ Rationale: The brief emphasizes mobile-first and PWA behavior, there are no regu
 - Admin dashboard, metrics, and audit logs
 - Moderation & safety workflows for paid/offers & abuse reports
 - Accessibility (WCAG basics) and low-bandwidth resilience
+- Visitor onboarding (homepage discovery, registration flows) + 5-minute signup target
 
 ---
 
@@ -139,13 +157,13 @@ Rationale: The brief emphasizes mobile-first and PWA behavior, there are no regu
 ### Validation Approach
 - Prototype the prayer post UI and A/B test friction (single‑screen flow vs multi‑field)
 - Run a small pilot (1–2 churches) for 4 weeks measuring adoption & repeat use
-- Measure social signals (Prayed taps per post), testimony submission rate, and retention lift
+- Measure social signals (one-tap support interactions per post), testimony submission rate, and retention lift
 - Collect pastor feedback on privacy/moderation load and iterate
 
 ### Metrics to Track
 - Prayer posts per MAU
 - % of posts anonymized
-- Prayed taps per post
+- One-tap support interactions per post
 - Testimony conversion rate
 - Time‑to‑first‑response
 - Moderator action rate
@@ -170,13 +188,13 @@ Rationale: The brief emphasizes mobile-first and PWA behavior, there are no regu
 - **Desktop:** Basic support for desktop browsers (responsive design), but focus is mobile-first
 
 ### SEO & Public Pages
-- **Requirement:** Basic SEO for public marketing/landing pages (server-side rendering or pre-rendered meta tags)
-- **Privacy control:** App content (requests, prayer posts) must be non-indexable; use robots/meta controls and server-side access control for private endpoints
-- **Implementation note:** Use SSR/prerender for marketing pages and ensure meta tags for social previews (OpenGraph/Twitter cards)
+- **Requirement:** Public marketing and landing pages must be discoverable by search engines and provide correct social-preview metadata when shared.
+- **Privacy control:** App content (requests, prayer posts) must be non-indexable; use robots/meta controls and access controls for private endpoints
+- **Implementation note:** Marketing pages should expose discoverability and social-preview metadata; implementation details belong in the architecture/design docs.
 
 ### Real-Time & Notifications
-- **Behavior:** Near-real-time updates for feeds and push notifications for assignments and approvals
-- **Implementation:** Push notifications via platform push services + lightweight websocket/long-poll for live updates where needed
+- **Behavior:** Near-real-time updates for feeds and reliable notifications for assignments and approvals.
+- **Implementation:** Deliver notifications and live updates using appropriate platform delivery mechanisms; implementation choices (transport and protocol) are specified in the architecture/design docs.
 
 ### Accessibility & Performance
 - **Accessibility target:** WCAG AA for key flows (request creation, approval, moderation)
@@ -271,7 +289,7 @@ Rationale: The brief emphasizes mobile-first and PWA behavior, there are no regu
 ### Volunteer Matching & Assignment
 - FR10: [Group Leader/Pastor] can assign a volunteer to a request.
 - FR11: [Volunteer] can accept or decline an assignment.
-- FR12: [Group Leader/Pastor] can view suggested volunteers for a request (based on basic criteria).
+- FR12: [Group Leader/Pastor] can view suggested volunteers for a request (based on location proximity, volunteer availability status, and historical response rate within the last 30 days).
 - FR13: [Volunteer] can update assignment status (accepted, in-progress, completed).
 
 ### Notifications & Communications
@@ -285,38 +303,38 @@ Rationale: The brief emphasizes mobile-first and PWA behavior, there are no regu
 - FR19: [Admin] can access audit logs of moderation and approval actions.
 
 ### Admin & Metrics
-- FR20: [Pastor/Admin] can view dashboard metrics (MAU, request response rate, avg response time).
+- FR20: [Pastor/Admin] can view dashboard metrics (MAU, request response rate).
 - FR21: [Admin] can export reports listing requests, assignments, and resolution statuses.
 - FR22: [Pastor/Admin] can configure governance settings (approval thresholds and visibility policies) using saved presets; changes must persist immediately and be recorded in the audit log with actor and timestamp.
 
 ### Offline & Sync
 - FR23: [Member] can save a draft request locally and continue editing while offline.
 - FR24: [Member] can submit a request that will be retried/synced when connectivity is restored, and receive confirmation when accepted server-side.
-- FR25: [User] can read recent feeds cached for offline viewing (basic read‑only offline support).
+- FR25: [User] can read the last 7 days of feeds cached for offline viewing (basic read‑only offline support).
 
 ### Integration & Platform (PWA / SEO / Privacy)
-- FR26: [System] must expose public marketing pages with SEO metadata and OpenGraph/Twitter meta tags.
-- FR27: [System] must prevent indexing of private content and enforce server-side access control for private endpoints.
-- FR28: [System] must support push notifications via platform push services and provide an email digest fallback.
+- FR26: [System] can expose public marketing pages that are discoverable by search engines and display correctly when shared on social media platforms.
+- FR27: [System] can prevent indexing of private content and restrict access to private endpoints based on user authentication and role permissions.
+- FR28: [System] can deliver push notifications to supported devices and provide an email digest fallback for users without push-enabled devices.
 
 ### Homepage & Registrations
 - FR39: [Visitor] can view the homepage with a hero, short tagline, and two clear CTAs (`Join as Member`, `Register a Church`).
-  - **Acceptance:** Hero and both CTAs visible on mobile and desktop; clicking a CTA opens the corresponding entry flow and fires the analytics event (`homepage.cta.click`, `cta=member|church`).
-  - **Metric:** `homepage.cta.click` event must fire on CTA click; Homepage CTA CTR ≥ 5% (pilot); click-to-signup conversion ≥ 5% (pilot).
+  - **Acceptance:** Hero and both CTAs visible on mobile and desktop; clicking a CTA opens the corresponding entry flow and records the interaction for analytics tracking.
+  - **Metric:** Homepage CTA interactions must be recorded; Homepage CTA CTR ≥ 5% (pilot); click-to-signup conversion ≥ 5% (pilot).
 - FR40: [User] can begin a member registration flow from the homepage and complete account creation.
-  - **Acceptance:** Median time-to-signup (signup start → signup.success) ≤ 5 minutes (pilot); `signup.start` and `signup.success` events recorded; signup success rate (pilot) ≥ 70%.
+  - **Acceptance:** Median time-to-signup (flow initiation to completion) ≤ 5 minutes (pilot); signup interactions recorded for analytics; signup success rate (pilot) ≥ 70%.
 - FR41: [Admin/Verified Rep] can begin Church registration from the homepage and complete the Church create flow (may enter *Pending* state if verification is required).
-  - **Acceptance:** `church.register` event recorded; newly created Church appears in admin list; verification/activation timeline visible to creator; median time-to-verify (manual or automated) ≤ 48 hours in pilot.
+  - **Acceptance:** Church registration interactions recorded for analytics; newly created Church appears in admin list; verification/activation timeline visible to creator; median time-to-verify (manual or automated) ≤ 48 hours in pilot.
 
 ### Prayer‑Centric (Innovation)
 - FR29: [Member] can post to a church prayer wall with an anonymity option and optional pastor-approval requirement.
-  - **Acceptance:** Anonymous posts are stored without personal identifiers and, if approval required, appear in the pastor approval queue.
+  - **Acceptance:** Anonymous posts are stored without personal identifiers and, if approval required, are routed for pastor review before publication.
 - FR30: [User] can indicate support with a one‑tap action (e.g., “Prayed / Praying”) for a prayer post.
-  - **Acceptance:** Tapping increments a visible support count and is recorded in analytics (Prayed taps per post).
+  - **Acceptance:** Tapping increments a visible support count and records the interaction for analytics tracking.
 - FR31: [Member] can submit a short testimony linked to a previously posted prayer to close the loop.
   - **Acceptance:** Testimony links to the original prayer and is visible in the prayer's activity timeline.
 - FR32: [Pastor/Admin] can request or generate a daily/weekly prayer digest for groups or the church.
-  - **Acceptance:** Digest contains aggregated posts and answered testimony highlights and is deliverable as email or in-app digest.
+  - **Acceptance:** Digest contains aggregated posts and answered testimony highlights and is deliverable via email or in-app notification.
 
 #### Church Onboarding & Membership
 - **Who can create/register a Church:** Platform Admins (full rights), Verified Church Representative (self-register with verification) and Support/Compliance staff (create on behalf). Only accounts with `create_church` or `manage_church` privileges may finalize a Church record.
@@ -337,10 +355,10 @@ Rationale: The brief emphasizes mobile-first and PWA behavior, there are no regu
   - **Acceptance:** Role changes immediately affect UI permissions (e.g., only Pastor can approve sensitive posts).
 - FR36: [Pastor/Admin] can configure Church-level privacy defaults (e.g., require pastor approval for sensitive posts).
   - **Acceptance:** New posts follow the configured default; posts marked "require approval" route to the approval queue.
-- FR37: [Group Leader] can create and manage small groups associated with a Church and add/remove members.
+- FR37: [Group Leader] can create and manage groups of 3-20 members associated with a Church and add/remove members.
   - **Acceptance:** Groups are listed under the Church, members can be added/removed, and group membership controls visibility of posts.
 - FR38: [Pastor/Admin] can view a Church admin dashboard showing pending approvals, request counts, and response rate metrics.
-  - **Acceptance:** Dashboard shows counts matching the current data (pending approvals, total requests, computed response rate), and includes homepage metrics (CTA CTR), signup conversion, and invite acceptance metrics; dashboard data updates within the configured refresh interval.
+  - **Acceptance:** Dashboard shows counts matching the current data (pending approvals, total requests, computed response rate), and includes key onboarding and engagement metrics; dashboard data updates within 5 minutes of changes.
 
 ---
 
@@ -349,26 +367,35 @@ Rationale: The brief emphasizes mobile-first and PWA behavior, there are no regu
 ### Privacy & Data Protection
 - **Data minimization:** Store minimal PII; require only fields necessary for functionality (display name, contact for volunteers if consented). **PII retention:** default retention for non-consented volunteer contact info is 365 days; on account deletion remove PII within 30 days. Avoid storing private content in public indexes.
 - **Access controls:** Enforce role-based access control (RBAC) for pastor, leader, volunteer, support, and member roles. Default visibility is restricted; allow escalation with approval. **Metric:** RBAC enforcement pass rate ≥ 99% in automated tests; role-change audit entries recorded within 5s.
-- **Encryption:** TLS 1.2+ for in-transit; AES-256 or equivalent for data-at-rest in databases and backups. Secure secrets (keys, tokens) with secret management (Key Vault / Secret Manager).
+- **Encryption:** TLS 1.2+ for in-transit; AES-256 or equivalent for data-at-rest in databases and backups. Securely store secrets (keys, tokens) in an auditable, access-controlled secret management system.
+  **Metric:** 100% of data transmissions use TLS 1.3 or higher; 100% of stored data is encrypted with AES-256 or equivalent. **Measurement Method:** Automated scans and penetration testing verify encryption protocols; database audits confirm at-rest encryption. **Context:** Ensures compliance with data protection standards for church-sensitive information.
 - **Anonymization & Pseudonymization:** Support anonymized prayer posts and options to redact or pseudonymize personal identifiers when requested. **Acceptance & metrics:** Automated anonymization should remove direct identifiers for ≥99% of anonymization operations in an audit sample; manual redaction requests processed within 72 hours for ≥90% of cases.
 - **Privacy controls & data subject rights:** Support deletion/export of user data (right to be forgotten), and provide clear data retention and deletion policies. **Metric:** Data deletion/export requests completed within SLA (deletion ≤ 30 days); anonymization accuracy ≥ 99% (audit sample).
 
 ### Audit & Logging
 - **Audit logs:** Record approval, moderation, assignment, and deletion actions with timestamp, actor, and reason. Immutable or append-only storage for audit trails.
-- **Log segregation:** Separate analytics events from identifiable logs; use hashed identifiers for analytics to protect PII.
+  **Metric:** 100% of specified actions logged within 1 second; log integrity maintained (no alterations detectable). **Measurement Method:** Automated log verification scripts and quarterly integrity audits. **Context:** Supports church governance and incident response for sensitive community actions.
+- **Log segregation:** Separate analytics events from identifiable logs; pseudonymize analytics identifiers to protect PII.
+  **Metric:** 0% overlap between analytics and PII logs; 100% analytics identifiers pseudonymized. **Measurement Method:** Log analysis tools scan for segregation compliance and pseudonymization accuracy. **Context:** Protects user privacy in church settings where anonymity is critical.
 - **Retention & access:** Define log retention (e.g., 90 days for detailed logs, 1 year for summarized audit entries) and restrict access to authorized roles.
+  **Metric:** 100% logs retained per policy; 0% unauthorized access attempts succeed. **Measurement Method:** Retention verification scripts and access control tests. **Context:** Balances compliance needs with privacy for church data.
 
 ### Security Operations & Compliance
 - **Authentication & account protection:** MFA for pastor/admin accounts; session controls and token expiration for all users.
+  **Metric:** 100% pastor/admin logins use MFA; session tokens expire within 30 minutes of inactivity. **Measurement Method:** Login audits and session timeout tests. **Context:** Secures church leadership access to sensitive moderation tools.
 - **Vulnerability management:** Regular dependency scanning and periodic penetration testing (annually or before major releases). **Remediation SLA:** Critical vulnerabilities remediated within 7 days; high severity within 14 days.
 - **Incident response:** Documented incident response plan with breach notification timelines (e.g., notify affected parties within 72 hours per best practice) and escalation paths.
-- **Secure development:** Enforce code reviews and require SAST on all pull requests, DAST in CI pipelines, secrets scanning in commit hooks; weekly dependency scanning cadence.
+- **Secure development:** Enforce code reviews and require automated security scanning (static and dynamic) in CI, secrets scanning in commit hooks; weekly dependency scanning cadence.
+  **Metric:** 100% pull requests pass automated security scans; 0 critical vulnerabilities in weekly scans. **Measurement Method:** CI pipeline reports and vulnerability dashboards. **Context:** Prevents security flaws in church-facing features like prayer posts.
 
 ### Scalability & Performance
-- **Scalability targets:** Pilot MVP should support pilot load (100 MAU) and scale to **10k MAU** with autoscaling; initial API p95 latency target <300ms under typical load.
-- **Autoscaling & stateless services:** Design services stateless for horizontal scaling; use managed databases with read replicas and autoscaling where applicable.
-- **Asynchronous processing:** Offload heavy or bursty tasks (notifications, digest generation, moderation AI) to background job queues to smooth load.
-- **Caching & CDN:** Use CDN for static assets and SSR-cached pages; apply edge caching for marketing pages and rate limit private endpoints.
+- **Scalability targets:** Pilot MVP should support pilot load (100 MAU) and support automatic scaling to **10k MAU**; initial API p95 latency target <300ms under typical load.
+- **Autoscaling & stateless services:** Design services stateless for horizontal scaling; databases must support horizontal read scaling and automated capacity adjustments where applicable.
+  **Metric:** Services scale to 10x load without state loss; 99.9% uptime during scaling events. **Measurement Method:** Load testing and uptime monitoring. **Context:** Supports church community growth without service disruptions.
+- **Asynchronous processing:** Offload heavy or bursty tasks (notifications, digest generation, moderation AI) to asynchronous background processing to smooth load.
+  **Metric:** 95% of tasks processed within 5 minutes; queue depth < 100 during peak load. **Measurement Method:** Monitoring and task completion logs. **Context:** Ensures timely notifications for urgent church requests.
+- **Caching & delivery:** Serve static assets from geographically distributed caches and cache marketing pages close to users; rate limit private endpoints as needed.
+  **Metric:** 90% of static assets served from distributed caches; page load < 2s globally. **Measurement Method:** Cache logs and performance tests. **Context:** Improves access for remote church members.
 - **Rate limiting & abuse prevention:** Implement per-user and per-IP rate limits and throttling for critical endpoints (e.g., posting, notification sending). **Targets:** Per-user posting limit ≤ 5 posts/hour (pilot); per-IP request limit ≤ 200 requests/minute; unauthenticated posting endpoints throttle ≤ 20 reqs/min. Monitor and adjust thresholds during pilot.
 
 ### Backup, DR & Availability
@@ -377,16 +404,19 @@ Rationale: The brief emphasizes mobile-first and PWA behavior, there are no regu
 - **Availability:** Aim for 99.9% uptime for user-facing services; design for graceful degradation (read-only cached mode) during partial outages.
 
 ### Monitoring & SLOs
-- **Monitoring:** Instrument services for latency, error rates, queue depth, and system throughput; integrate with alerting (PagerDuty/ops channel) for SLO breaches.
+- **Monitoring:** Instrument services for latency, error rates, queue depth, and system throughput; integrate with an on-call alerting system for SLO breaches.
 - **SLOs:** Define SLOs for key services (API latency p95 < 300ms, notification delivery success ≥ 95%, error rate < 0.5%).
-- **Observability:** Structured logging and distributed tracing for troubleshooting and performance tuning.
+- **Observability:** Provide structured logs and request-correlation telemetry for troubleshooting and performance tuning.
+  **Metric:** 100% relevant requests are traceable; error detection within 1 minute. **Measurement Method:** Telemetry and alert systems. **Context:** Facilitates quick fixes for church service issues.
 - **Monitoring thresholds & alerts:** Alert when error rate > 1% sustained for 5 minutes; alert on queue depth > 1000 for background workers; alert when notification delivery success < 95%.
-- **Analytics & Onboarding Metrics:** Record homepage CTA clicks (`homepage.cta.click`), signup start/success (`signup.start`, `signup.success`), and `church.register` events; expose CTA CTR, signup conversion, median time-to-signup (target ≤ 5 minutes pilot), and invite acceptance rate (target ≥ 80% within 7 days) on the admin dashboard (see FR38).
-- **Analytics & Onboarding Metrics:** Record homepage CTA clicks (`homepage.cta.click`), signup start/success (`signup.start`, `signup.success`), and `church.register` events; expose CTA CTR, signup conversion, median time-to-signup (target ≤ 5 minutes pilot), and invite acceptance rate (target ≥ 80% within 7 days) on the admin dashboard (see FR38).
+- **Analytics & Onboarding Metrics:** Record homepage CTA interactions, signup flow start/completion events, and church registration interactions; expose CTA CTR, signup conversion, median time-to-signup (target ≤ 5 minutes pilot), and invite acceptance rate (target ≥ 80% within 7 days) on the admin dashboard (see FR38).
+- **Analytics & Onboarding Metrics:** Record homepage CTA interactions, signup flow start/completion events, and church registration interactions; expose CTA CTR, signup conversion, median time-to-signup (target ≤ 5 minutes pilot), and invite acceptance rate (target ≥ 80% within 7 days) on the admin dashboard (see FR38).
 
 ### Compliance & Policy
 - **Data protection:** Implement controls to support GDPR-like obligations (consent, data export, deletion) and region-specific privacy requirements as needed.
+  **Metric:** 100% data export/deletion requests fulfilled within 30 days; 0% non-compliant data handling. **Measurement Method:** Audit trails and compliance scans. **Context:** Protects church members' personal data in prayer and request features.
 - **Policy documentation:** Publish internal policies for retention, access control, and moderation; ensure pastors/administrators can access governance settings.
+  **Metric:** 100% policies accessible to authorized users; 0% outdated policies. **Measurement Method:** Access logs and policy review audits. **Context:** Guides church leaders in managing community safety.
 
 ---
 

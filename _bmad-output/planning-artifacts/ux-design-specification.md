@@ -95,7 +95,7 @@
 ### 2. Admin Dashboard (Metrics & Moderation)
 *Target User: Church Admins and Moderators.*
 - **Overview Tab:**
-  - **Key Metrics (Top Cards):** Monthly Active Users (MAU), Request Resolution Rate (%), Avg Response Time.
+  - **Key Metrics (Top Cards):** Monthly Active Users (MAU), Request Resolution Rate (%).
   - **Activity Sparklines:** Requests vs Solved over last 30 days.
 - **Moderation Queue:**
   - List of "Pending Approval" requests & "Flagged" content.

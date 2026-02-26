@@ -1,5 +1,5 @@
 ---
-stepsCompleted: [1]
+stepsCompleted: [1, 2, 3, 4]
 inputDocuments:
   - _bmad-output/planning-artifacts/prd.md
   - _bmad-output/planning-artifacts/system-architecture-BoazPlan-2026-02-13.md
@@ -46,7 +46,7 @@ This document provides the complete epic and story breakdown for BoazPlan, decom
 - FR19: [Admin] can access audit logs of moderation and approval actions.
 
 **Admin & Metrics**
-- FR20: [Pastor/Admin] can view dashboard metrics (MAU, request response rate, avg response time).
+- FR20: [Pastor/Admin] can view dashboard metrics (MAU, request response rate).
 - FR21: [Admin] can export reports listing requests, assignments, and resolution statuses.
 - FR22: [Pastor/Admin] can configure governance settings (approval thresholds and visibility policies) using saved presets; changes must persist immediately and be recorded in the audit log with actor and timestamp.
 
@@ -56,9 +56,9 @@ This document provides the complete epic and story breakdown for BoazPlan, decom
 - FR25: [User] can read recent feeds cached for offline viewing (basic read‑only offline support).
 
 **Integration & Platform (PWA / SEO / Privacy)**
-- FR26: [System] must expose public marketing pages with SEO metadata and OpenGraph/Twitter meta tags.
-- FR27: [System] must prevent indexing of private content and enforce server-side access control for private endpoints.
-- FR28: [System] must support push notifications via platform push services and provide an email digest fallback.
+- FR26: [System] can expose public marketing pages with SEO metadata and OpenGraph/Twitter meta tags.
+- FR27: [System] can prevent indexing of private content and enforce server-side access control for private endpoints.
+- FR28: [System] can support push notifications via platform push services and provide an email digest fallback.
 
 **Homepage & Registrations**
 - FR39: [Visitor] can view the homepage with a hero, short tagline, and two clear CTAs (`Join as Member`, `Register a Church`).
