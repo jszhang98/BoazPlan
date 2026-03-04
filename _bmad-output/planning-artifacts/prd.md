@@ -22,7 +22,7 @@ completedAt: 2026-02-12T00:00:00Z
 ## Executive Summary
 - **Vision:** Provide a church‑managed, mobile‑first platform (PWA) that makes requesting and coordinating help — prayer, practical assistance, and volunteer matching — fast, private, and reliably governed by church leadership.
 - **Problem statement:** Church communities lack a single, privacy‑first place to post needs and coordinate volunteers; current channels are fragmented and make follow‑through unreliable.
-- **Top-line success criteria:** Reduce median request submission time to ≤ 2 minutes and achieve a request response rate ≥ 70% within 72 hours (these directly map to measurable product goals below).
+- **Top-line success criteria:** Deliver an intuitive and delightful user experience that ensures members can easily navigate the platform, submit requests, and engage with their community. Prioritize reducing friction in user flows and achieving high satisfaction scores alongside measurable goals like achieving a request response rate ≥ 70% within 72 hours.
 - **Target users:** Members (requesters), Pastors/Admins (approvers & moderators), Group Leaders & Volunteers (match & execution).
 
 ## Input documents discovered and loaded
@@ -43,11 +43,9 @@ Rationale: The brief emphasizes mobile-first and PWA behavior, there are no regu
 
 ### User Success — Request Completion Time
 - **Definition:** Time from opening the “New Request” flow to submitting the request.
-- **Metric:** Median time to submit a request.
-- **Formula:** median(submit_time - start_time) where event = request_submit
-- **Target:** Median ≤ **2 minutes**; **90%** of requests completed ≤ 2 minutes.
+- **Metric:** Request completion time.
 - **Owner:** Product / UX
-- **Action / Alert:** If median > 2 min or <90% target, run UX optimization (reduce fields/steps, streamline flow).
+- **Action / Alert:** If user feedback indicates friction in the flow, run UX optimization (reduce fields/steps, streamline flow).
 
 ### Business Success — Request Response Rate
 - **Definition:** % of requests assigned to a volunteer within 72 hours.
@@ -64,7 +62,6 @@ Rationale: The brief emphasizes mobile-first and PWA behavior, there are no regu
 - **Owner:** Engineering / Ops
 
 ### Measurable Outcomes
-- Median request submit time ≤ 2 minutes and 90% requests ≤ 2 minutes
 - Request Response Rate ≥ 70% within 72 hours
 - Pastor/Leader satisfaction ≥ 4.0 (survey)
 
@@ -359,6 +356,12 @@ Rationale: The brief emphasizes mobile-first and PWA behavior, there are no regu
   - **Acceptance:** Groups are listed under the Church, members can be added/removed, and group membership controls visibility of posts.
 - FR38: [Pastor/Admin] can view a Church admin dashboard showing pending approvals, request counts, and response rate metrics.
   - **Acceptance:** Dashboard shows counts matching the current data (pending approvals, total requests, computed response rate), and includes key onboarding and engagement metrics; dashboard data updates within 5 minutes of changes.
+
+### Innovation & Engagement
+- FR42: [Member/Volunteer] can view a "Compass Widget" — a dynamic UI element that sorts and surfaces the most urgent unmet needs based on a composite Urgency Score (distance proximity, time since posted, and severity level).
+  - **Acceptance:** Compass widget displays a ranked list of requests ordered by `Score = (Weight_Distance / Distance_KM) + (Weight_Time × Hours_Since_Posted) + (Weight_Severity × Severity_Level)`; requests with the lowest engagement (longest unseen / fewest reactions) are boosted in rank ("Forgotten First" sorting); widget is visible on the member home dashboard and updates on each load.
+  - **Geospatial note:** Requires PostGIS or `earthdistance` Postgres extension to compute distance queries efficiently.
+  - **Metric:** Compass-driven volunteer click-through rate ≥ 15% of widget impressions (pilot); median time-to-first-response for Compass-surfaced requests ≤ 48 hours (pilot).
 
 ---
 

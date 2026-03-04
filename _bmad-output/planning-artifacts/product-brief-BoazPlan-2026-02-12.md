@@ -108,7 +108,7 @@ A secure, church-governed app where members can post needs (material help, rides
   - Context: Regular church member who wants to connect, share prayer requests, offer help, and post testimonies.  
   - Motivations & Goals: Quickly post needs/offers, get timely responses, maintain privacy, and see help completed.  
   - Pain Points: Fragmented communication, uncertain follow-through, unclear who saw or answered requests.  
-  - Success Vision: Can post a prayer or help request in <2 minutes and get a response or assignment within hours.
+  - Success Vision: Enjoys a smooth, intuitive app experience where posting a prayer or help request feels effortless, her privacy is respected, and responses come reliably when needed.
 
 - **Pastor David Cole — Pastor**  
   - Context: Lead pastor responsible for approval, governance, and community well‑being.  

@@ -45,6 +45,10 @@ development_status:
   1-2-church-organization-creation-configuration: done
   1-3-role-based-access-control-rbac-implementation: done
   1-3-role-based-access-control-rbac-implementation: backlog
+  1-4-group-management-ui: review
+  1-5-group-membership-management: in-progress
+  1-6-request-feed-group-filter: backlog
+  1-7-group-authz-edge-cases: backlog
   epic-1-retrospective: optional
 
   epic-2: done
@@ -56,11 +60,13 @@ development_status:
   epic-3: done
   3-1-volunteer-assignment-logic: done
   3-2-volunteer-dashboard-status-updates: done
+  3-4-request-status-history: done
+  4-4-prayer-wall-anonymity: done
   epic-3-retrospective: optional
 
   epic-4: backlog
-  4-1-multi-channel-notification-system: backlog
-  4-2-announcements-digests: backlog
+  4-1-compass-widget: done
+  4-2-announcements-digests: done
   epic-4-retrospective: optional
 
   epic-5: done
@@ -76,8 +82,8 @@ development_status:
   6-3-governance-configuration: done
   epic-6-retrospective: optional
 
-  epic-7: backlog
-  7-1-pwa-shell-service-worker-implementation: backlog
-  7-2-public-marketing-homepage-seo: backlog
-  7-3-security-privacy-infrastructure: backlog
+  epic-7: done
+  7-1-pwa-shell-service-worker-implementation: done
+  7-2-public-marketing-homepage-seo: done
+  7-3-security-privacy-infrastructure: done
   epic-7-retrospective: optional

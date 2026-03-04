@@ -1,139 +1,134 @@
-# UX Design Specification — BoazPlan
+---
+stepsCompleted: [1, 2, 3, 4, 5]
+inputDocuments:
+  - _bmad-output/planning-artifacts/prd.md
+  - docs/PRD_church_mutual_aid.md
+  - _bmad-output/planning-artifacts/product-brief-BoazPlan-2026-02-12.md
+  - docs/project_brief_church_mutual_aid.md
+  - _bmad-output/project-context.md
+  - docs/aa.md
+---
 
-**Author:** UX Designer (BMAD)
-**Date:** 2026-02-13
-**Status:** Draft — ready for review by UX lead
+# UX Design Specification BoazPlan
+
+**Author:** Jansen
+**Date:** 2026-03-01
 
 ---
 
-## Project summary
-- Purpose: Design a mobile-first, low-friction UI for posting and managing community help requests (BoazPlan).
-- Primary users: Members, Pastors/Admins, Volunteers.
-- Key constraint: Primary flow (New Request) must be completable in ≤ 2 minutes.
+<!-- UX design content will be appended sequentially through collaborative workflow steps -->
 
-## Scope (this spec)
-- New Request creation (primary + drafts + offline recovery)
-- Visibility & Pastor approval workflow
-- Volunteer assignment, accept/decline, status updates
-- Notifications and basic messaging UX
-- UI patterns, component library notes, accessibility and analytics hooks
+## Core User Experience
 
-## Success criteria
-- Median task completion time (primary path) ≤ 2 minutes for ≥ 80% of participants
-- ≥ 80% of pastors can change visibility and approval settings correctly
-- Volunteers can accept/decline and change status with ≤ 1 error per task
+### Defining Experience
 
-## User flows (high level)
-1. Onboard / quick sign-in (church email/phone + OTP or invite)
-2. New Request — select category, write short description, set visibility, submit
-3. Save Draft / resume after connectivity loss
-4. Pastor approval queue — review, change visibility, approve/reject
-5. Volunteer assignment — accept/decline, update progress, mark complete
-6. Notifications — push / in-app badge / email summaries
+The heart of BoazPlan is a simple loop: view the church feed and post a new request/prayer post.
+Members should be able to submit a need with two taps/keystrokes, see it appear nearly
+instantly, and then browse other needs without thinking about roles or scopes.
+For pastors/admins the experience extends to creating groups and scoping requests, but
+the core loop remains the same.
 
-## Screen inventory (mobile PWA)
-- Home / Feed (filtered by visibility)
-- New Request (single-column form, progressive disclosure)
-- Drafts / My Requests
-- Pastor Queue / Request Detail / Approve Modal
-- Volunteer Dashboard / Assignment Detail
-- Settings / Notifications / Privacy Controls
+### Platform Strategy
 
-## Key UI components & behaviours
-- Progressive New Request form: short title -> auto-suggest categories -> required fields highlighted
-- Visibility chooser: `Public | Group | Private` with inline help and example of who will see the post
-- Approval toggle (for pastors) with explicit confirmation and audit note
-- Offline draft save + resume banner (graceful retry)
-- Assignment CTA: `Accept` / `Decline` with immediate confirmation and notification to requester
-- Minimal steps and keyboard-first inputs for fast completion
+BoazPlan is built as a PWA targeting mobile browsers first (phones/tablets), with
+responsive support for desktop. Interaction is touch‑centric with large buttons and
+minimal typing. Offline caching of the feed and request drafts is required; all API
+calls carry auth/tenant headers so the same backend serves every device.
 
-## Copy & microcopy (examples)
-- Primary CTA: `Post request` (primary)
-- Visibility helper: `Group only — only people in your small group will see this.`
-- Offline hint: `Draft saved — we'll retry when you're back online.`
+### Effortless Interactions
 
-## Accessibility
-- WCAG AA baseline: color contrast, focus order, semantic HTML roles
-- Large tap targets (44px), reachable controls within one thumb zone
-- ARIA labels for all modals, dynamic content announcements for status changes
+- Autocomplete church and group selectors to reduce typing.
+- Instant return to feed after posting; newly created items appear without reload.
+- One‑tap filtering of the request list by type, urgency, or group.
+- Inline member‑management controls so admins don’t leave the group page.
 
-## Analytics & instrumentation
-- Track: time-to-submit, abandonment point per step, visibility changes, approval actions, assignment accept/decline
-- Events: `new_request_start`, `new_request_submit`, `visibility_change`, `approval_action`, `assignment_accept`
+### Critical Success Moments
 
-## Edge cases & error handling
-- Network: autosave drafts, clear error messages, retry option
-- Duplicate requests: suggest similar requests before submit
-- Privacy change after assignment: warn and require confirmation
+- First‑time posting flow completes and the request is visible.
+- Pastor/Admin creates a group and immediately sees it in the list.
+- Volunteer accepts an assignment and the status updates in real time.
 
-## Acceptance criteria (for stories)
-- New Request primary path completed in ≤ 2 minutes in manual test
-- Draft autosave persists across tab reloads and offline/online transitions
-- Pastor can change visibility and set approval — action reflected in feed
-- Volunteer can accept assignment and update status; requester and volunteer receive notifications
-- All new screens meet WCAG AA checks and pass basic accessibility audit
+Failure in any of these moments breaks trust and must be avoided.
 
-## Design tokens / component references
-- Use project's token set (colors, spacing, typography) — add `ui-tokens.md` when available
-- Components: `Button/Primary`, `Form/Input`, `Modal/Confirm`, `Toast/Offline`
+### Experience Principles
 
-## Additional Screen Specifications
+- **Fast & predictable:** responses in <1 s, visible feedback every step.
+- **Minimal cognitive load:** expose only what each role needs.
+- **Mobile‑first, offline‑aware:** assume users on unreliable networks.
+- **Empower pastors/admins:** give clear, unobtrusive tools for governance.
 
-### 1. Church Creation (New Church Registration)
-*Target User: Pastor or Administrator establishing a new church instance.*
-- **Step 1: Landing & Auth:** "Register your Church" CTA. Simple Email/OTP authentication or Social Login (Google/Apple).
-- **Step 2: Church Details:** 
-  - Input: Church Name (Required), Church ID/Handle (Unique URL slug, auto-generated, editable).
-  - Location: Address search with map confirmation (Google Places API).
-  - Branding: Upload Logo (optional), Primary Color picker.
-- **Step 3: Admin Profile:** Confirm Admin Name and Contact Info.
-- **Step 4: Operational Settings (Defaults):** 
-  - Privacy: "Strict" (All posts require approval) vs "Open" (Trusted members post freely).
-  - Terms: Accept platform MSA and Data Privacy agreement.
-- **Success State:** "Church Created" dashboard with "Invite Leaders" and "Print QR Code" quick actions.
+## UX Pattern Analysis & Inspiration
 
-### 2. Admin Dashboard (Metrics & Moderation)
-*Target User: Church Admins and Moderators.*
-- **Overview Tab:**
-  - **Key Metrics (Top Cards):** Monthly Active Users (MAU), Request Resolution Rate (%).
-  - **Activity Sparklines:** Requests vs Solved over last 30 days.
-- **Moderation Queue:**
-  - List of "Pending Approval" requests & "Flagged" content.
-  - Quick Actions: `Approve`, `Reject` (with reason preset), `Message User`.
-  - Batch selection for clearing backlog.
-- **Requests Management:**
-  - Filterable list: Active, Unassigned, Overdue (>72h).
-  - Status indicators: High Urgency (Red), Normal (Gray).
-- **Members:** Searchable list, Role assignment (Member -> Leader -> Admin).
+### Inspiring Products Analysis
 
-### 3. Public Homepage (Marketing & PWA Landing)
-*Target User: Unauthenticated visitors, potential new churches.*
-- **Hero Section:**
-  - H1 Tagline: "Community help, coordinated."
-  - Subtext: "A privacy-first platform for church mutual aid."
-  - **Primary CTA:** "Join / Register Church".
-  - **Secondary CTA:** "Log In".
-- **PWA Install Prompt:**
-  - Smart banner: "Install BoazPlan for a better experience" (Add to Home Screen instructions).
-  - "How it works" 3-step graphic: Post Necessity -> Admin Approves -> Community Responds.
-  - **Features Grid:** Privacy focus, Real-time updates, Volunteer matching.
-- **Footer:** Links to Privacy Policy, Terms, Support.
+1. **WhatsApp / Messenger**
+   - Core: instant, conversational posting.
+   - Strengths: one‑tap composer, real‑time updates, obvious status feedback.
+   - Delight: message “sent” ticks, inline typing indicators.
 
-## Deliverables & artifacts
-- Clickable mobile PWA prototype (screens above)
-- Annotated UI spec (this doc + screenshots)
-- Acceptance-test checklist and analytics events map
+2. **Trello**
+   - Core: lightweight task/board creation.
+   - Strengths: drag‑drop cards, easy filtering, minimal modal forms.
+   - Delight: card creation via quick‑add, immediate visual feedback.
 
-## Review & next steps
-1. Review this draft with Product & Engineering (assign a UX lead).  
-2. Produce clickable prototype for the three core flows (New Request, Approval, Volunteer).  
-3. Convert UI screens into epics & stories with acceptance criteria and analytics tasks.  
+3. **Google Maps**
+   - Core: location feed/filtering.
+   - Strengths: fast search, contextual filters, offline caching.
+   - Delight: smooth pan/zoom, clear hierarchy of information.
 
----
+Users love these because they remove friction, show immediate results, and feel responsive. The mobile‑first, touch‑optimized interactions are compelling, and the apps are reliable offline.
 
-## Where to find / who to involve
-- Internal UX workflow: `_bmad/bmm/workflows/2-plan-workflows/create-ux-design` (use to expand this spec).  
-- UX agent doc: `_bmad/bmm/agents/ux-designer.md` — use for role guidance and review.  
-- Output file (this spec): `_bmad-output/planning-artifacts/ux-design-specification.md`.
+### Transferable UX Patterns
 
-If you'd like, I can (A) expand this into a clickable prototype, (B) convert screens into Epics/Stories, or (C) draft a hiring brief to find an external UX expert. Reply with A, B, or C.
+- **Quick‑add composer** (WhatsApp) → use for “new request” form.
+- **Inline filters** (Maps) → integrate group/urgency type selectors at top of feed.
+- **Drag‑and‑drop** or swipe actions (Trello) → could work for volunteer assignment or deleting items.
+- **Status indicators** (WhatsApp ticks) → show “posted”, “approved”, “assigned” states clearly.
+
+### Anti-Patterns to Avoid
+
+- **Deep modal stacks** like old Facebook – avoid burying the new‑request form under multiple screens.
+- **Clunky onboarding forms** – we need a single screen post‑login, not 5‑step wizards.
+- **Hidden functionality** behind obscure icons.
+
+### Design Inspiration Strategy
+
+- **Adopt** WhatsApp’s one‑tap composer and instant feedback for posting.
+- **Adapt** Maps‑style filters into our feed header, but simplify to two or three options.
+- **Avoid** Trello’s overly generic board metaphor; keep our layout feed‑centric and linear.
+
+## Desired Emotional Response
+
+### Primary Emotional Goals
+
+Users should feel **empowered and in control** when managing requests or groups, **confident** that their posts will be seen, and **connected** to their church community. Pastors and admins need a sense of **authority and reassurance** that the platform helps them lead effectively.
+
+### Emotional Journey Mapping
+
+- **Discovery:** curiosity and optimism when first seeing the feed or settings.
+- **Core action:** satisfaction and ease when submitting a request or creating a group.
+- **Completion:** relief and accomplishment after posting or assigning a volunteer.
+- **Error:** mild frustration if submission fails, but quick recovery should restore trust.
+- **Return visits:** comfort and familiarity, reinforcing community connection.
+
+### Micro-Emotions
+
+- **Confidence vs. Confusion:** clear labels and feedback avoid confusion.
+- **Trust vs. Skepticism:** consistent performance builds trust.
+- **Delight vs. Satisfaction:** small touches (animations, instant updates) provide delight.
+- **Belonging vs. Isolation:** seeing group‑specific posts fosters belonging.
+
+### Design Implications
+
+- Provide immediate feedback on posts/edits to reinforce confidence.
+- Use calm, friendly colors and micro‑animations to create delight.
+- Show clear status messages for errors and auto‑retry to reduce frustration.
+- Highlight community signals (member counts, group names) to promote belonging.
+
+### Emotional Design Principles
+
+1. **Make users feel effective** – every action should succeed or clearly explain failure.
+2. **Build trust through transparency** – show loading states, delimits roles visibly.
+3. **Add moments of delight** with subtle animations and instant updates.
+4. **Foster connection** by surfacing community and group context.
+
